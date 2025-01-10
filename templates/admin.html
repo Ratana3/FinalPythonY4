@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                 <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/product"><i class="fas fa-box"></i> Products</a></li>
+                <li><a href="/adduser"><i class="fas fa-users"></i> Add user</a></li>
+                <li><a href="/reports"><i class="fas fa-chart-line"></i> Reports</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-content">
+                    <h1>Dashboard</h1>
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i> Admin
+                    </div>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Products</h3>
+                        <p>{{total_products}}</p>
+                        <i class="fas fa-box fa-2x"></i>
+                    </div>
+                    <div class="card">
+                        <h3>Users</h3>
+                        <p>{{total_users}}</p>
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                    <div class="card">
+                        <h3>Orders</h3>
+                        <p>{{total_orders}}</p>
+                        <i class="fas fa-shopping-cart fa-2x"></i>
+                    </div>
+                    <div class="card">
+                        <h3>Revenue</h3>
+                        <p>${{total_price}}</p>
+                        <i class="fas fa-dollar-sign fa-2x"></i>
+                    </div>
+                </div>
+
+                <!-- Graph Section -->
+                <div class="graph-container">
+                    <div class="chart-card">
+                        <h3>Monthly Sales</h3>
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>User Growth</h3>
+                        <canvas id="userChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Sales Chart (Bar Chart)
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [1200, 1900, 3000, 2500, 3200, 4000],
+                    backgroundColor: '#2c3e50',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // User Growth Chart (Line Chart)
+        const userCtx = document.getElementById('userChart').getContext('2d');
+        const userChart = new Chart(userCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'New Users',
+                    data: [80, 100, 250, 200, 300, 450],
+                    borderColor: '#27ae60',
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

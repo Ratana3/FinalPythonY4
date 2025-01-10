@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="file"],
+        button[type="submit"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #fafafa;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-container input[type="file"] {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Edit User</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="{{ user.username }}" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+
+            <label for="image">Profile Image</label>
+            <input type="file" name="image" id="image">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

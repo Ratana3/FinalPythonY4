@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .form-container {
+            width: 60%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #fafafa;
+        }
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-container input[type="file"] {
+            padding: 10px;
+        }
+        select {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Edit Product</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="name">Product Name</label>
+            <input type="text" name="name" id="name" value="{{ product.name }}" required>
+
+            <label for="description">Description</label>
+            <textarea name="description" id="description">{{ product.description }}</textarea>
+
+            <label for="stock">Stock</label>
+            <input type="number" name="stock" id="stock" value="{{ product.stock }}" required>
+
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" value="{{ product.price }}" required>
+
+            <label for="size">Size</label>
+            <select name="size" id="size">
+                {% for size in sizes %}
+                    <option value="{{ size.size_id }}" {% if size.size_id == product.size_id %} selected {% endif %}>{{ size.description }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="category">Category</label>
+            <select name="category" id="category">
+                {% for category in categories %}
+                    <option value="{{ category.category_id }}" {% if category.category_id == product.category_id %} selected {% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="material">Material</label>
+            <select name="material" id="material">
+                {% for material in materials %}
+                    <option value="{{ material.material_id }}" {% if material.material_id == product.material_id %} selected {% endif %}>{{ material.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="color">Color</label>
+            <select name="color" id="color">
+                {% for color in colors %}
+                    <option value="{{ color.color_id }}" {% if color.color_id == product.color_id %} selected {% endif %}>{{ color.color_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="image">Product Image</label>
+            <input type="file" name="image" id="image">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+</body>
+</html>

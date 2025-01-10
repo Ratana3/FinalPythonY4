@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                 <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/product"><i class="fas fa-box"></i> Products</a></li>
+                <li><a href="/adduser"><i class="fas fa-users"></i> Add user</a></li>
+                <li><a href="/reports"><i class="fas fa-chart-line"></i> Reports</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-content">
+                    <h1>Dashboard</h1>
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i> Admin
+                    </div>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="dashboard-cards">
+
+    <!-- Product Input Form -->
+    <div class="form-container">
+        <h2>Send Message</h2>
+        <form method="POST" action="/sendemail" enctype="multipart/form-data" class="product-form">
+    <div class="form-group">
+        <label for="message">Message</label>
+        <input type="text" name="message" id="message" placeholder="Enter your message.." required>
+    </div>
+
+    <div class="form-group">
+        <label for="user">User</label>
+        <select name="user" id="user" required>
+            <option value="" disabled selected>Select User</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.email }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="submit-btn">Send message</button>
+</form>
+
+    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

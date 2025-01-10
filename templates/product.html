@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Add Product</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/product"><i class="fas fa-box"></i> Products</a></li>
+                <li><a href="/adduser"><i class="fas fa-users"></i> Add user</a></li>
+                <li><a href="/reports"><i class="fas fa-chart-line"></i> Reports</a></li>
+                <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-content">
+                    <h1>Dashboard</h1>
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i> Admin
+                    </div>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="dashboard-cards">
+
+                    <!-- Product Input Form -->
+                    <div class="form-container">
+                        <h2>Add New Product</h2>
+                        {% if error_message %}
+                            <p style="color: red;">{{ error_message }}</p>
+                        {% endif %}
+                        <form method="POST" action="/product" enctype="multipart/form-data" class="product-form">
+                            <div class="form-group">
+                                <label for="name">Product Name</label>
+                                <input type="text" name="name" id="name" placeholder="Product Name" required>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="form-group">
+                                <label for="image">Upload Product Image</label>
+                                <input type="file" name="image" id="image" accept="image/*" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" placeholder="Short Description"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="size">Size</label>
+                                <select name="size" id="size" required>
+                                    <option value="" disabled selected>Select Size</option>
+                                    {% for size in sizes %}
+                                        <option value="{{ size.size_id }}">{{ size.description }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select name="category" id="category" required>
+                                    <option value="" disabled selected>Select Category</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.category_id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="stock">Stock Quantity</label>
+                                <input type="number" name="stock" id="stock" placeholder="Stock Quantity" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="price">Price ($)</label>
+                                <input type="number" name="price" id="price" placeholder="Price" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="material">Material</label>
+                                <select name="material" id="material" required>
+                                    <option value="" disabled selected>Select Material</option>
+                                    {% for material in materials %}
+                                        <option value="{{ material.material_id }}">{{ material.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="color">Color</label>
+                                <select name="color" id="color" required>
+                                    <option value="" disabled selected>Select Color</option>
+                                    {% for color in colors %}
+                                        <option value="{{ color.color_id }}">{{ color.color_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Add Product</button>
+                        </form>
+                    </div>
+
+                    <!-- Product List -->
+                    <div class="table-container">
+                        <h2>Product List</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+            <tr>
+                <td>
+                    {% if product.product_image %}
+                    <img src="data:image/jpeg;base64,{{ product.product_image }}" alt="{{ product.name }}" width="100" height="100">
+                    {% else %}
+                    <span>No Image</span>
+                    {% endif %}
+                </td>
+                <td>{{ product.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.description }}</td>
+                <td>
+                <form action="/delete_product/{{ product.product_id }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+                    <form action="/edit_product/{{ product.product_id }}" method="GET" style="display:inline;">
+                    <button type="submit">Edit</button>
+                </form>
+            </td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No products available.</td>
+            </tr>
+            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
